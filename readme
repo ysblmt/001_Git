@@ -66,6 +66,11 @@ step6：  从远程库克隆
 		建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
 		从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
 
+标签管理
+	$ git branch
+	$ git tag v1.0
+	$ git tag
+	$ git tag -a <tagname> -m "blablabla..." //指定标签信息
 
 	
 	
