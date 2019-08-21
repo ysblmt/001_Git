@@ -1,1 +1,10 @@
-版本控制系统git
+$git init //初始化
+$git add readme //添加文件
+$git commit -m "add a file" //提交到仓库并标识为add a file
+$git status //查看状态
+$git diff //查看修改内容
+$git log //查看版本修改历史 (--pretty=oneline 精简指令)
+$git reset //版本回退 (--hard HEAD^ 回退到上一个版本)
+$git
+$
+$
