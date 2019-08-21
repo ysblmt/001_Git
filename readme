@@ -1,10 +1,73 @@
 $git init //初始化
-$git add readme //添加文件
+$git add <file> //添加文件
 $git commit -m "add a file" //提交到仓库并标识为add a file
 $git status //查看状态
 $git diff //查看修改内容
 $git log //查看版本修改历史 (--pretty=oneline 精简指令)
-$git reset //版本回退 (--hard HEAD^ 回退到上一个版本)
-$git
-$
-$
+$git reset --hard <commit_id> //版本回退 (--hard HEAD^ 回退到上一个版本)
+Git的版本回退速度非常快，因为Git在内部有个指向当前版本的HEAD指针，当你回退版本的时候，Git仅仅是把HEAD从指向你想要的版本
+$git reflog //查看命令历史，以便确定要回到未来的哪个版本
+$git checkout -- <file> //丢弃工作区修改
+$git reset HEAD <file> //撤销暂存区修改
+$git rm <file> //删除文件
+
+远程仓库
+step1：
+	$ssh-keygen -t rsa -C "youremail@example.com" //添加自己的邮箱 回车结束
+	查看用户目录下的.ssh 内部含有id_rsa(私钥)和id_rsa.pub(公钥)
+step2：
+	登陆GitHub，打开“Account settings”，“SSH Keys”页面：
+	点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容
+step3：
+	登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库
+	在Repository name填入Git仓库名
+step4： 关联远程库
+	$ git remote add origin git@github.com:<github usr name>/<git name>.git //michaelliao为GitHUB name 关联远程库
+step5:  推送数据
+	$ git push -u origin master //推送本地库
+	我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，
+	还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令
+	$ git push origin master // 推送更新数据
+step6：  从远程库克隆
+	$ git clone git@github.com:<github usr name>/<git name>.git
+
+分支管理
+	查看分支：git branch
+	创建分支：git branch <name>
+	切换分支：git checkout <name>
+	创建+切换分支：git checkout -b <name>
+	合并某分支到当前分支：git merge <name> //--no-ff强制禁用Fast forward 强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息
+	删除分支：git branch -d <name>
+	
+	当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。
+	解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。
+	用git log --graph命令可以看到分支合并图。
+	
+	bug分支
+		$ git stash //保存现场
+		首先确定要在哪个分支上修复bug，假定需要在master分支上修复，就从master创建临时分支
+		$ git checkout <file> //切换到出bug的分支
+		$ git checkout -b issue-num //创建第num的bug分支
+		$ git merge --no-ff -m "<s>" issue-num //解决bug后合并分支
+		$ git stash list // 查看现场
+		$ git stash apply // 恢复现场不删除stash  $ git stash drop // 删除分支：git $ git stash apply stash@{0} //恢复到指定的现场
+		$ git stash pop //恢复现场并删除stash
+		在master分支上修复的bug，想要合并到当前dev分支，可以用git cherry-pick <commit>命令，把bug提交的修改“复制”到当前分支，避免重复劳动
+	
+	Feature分支：添加新功能
+		$ git checkout -b feature-vulcan
+		$ git branch -D <name> //丢弃一个没有被合并过的分支
+	
+	多人协作
+		$ git remote //查看远程分支 git remote -v详细信息
+		$ git push origin master //推送本地分支master	
+		从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+		在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+		建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+		从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+
+	
+	
+	
+	
